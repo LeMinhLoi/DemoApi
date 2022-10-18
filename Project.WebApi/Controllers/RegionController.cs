@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.WebApi.Models.Domain;
 using Project.WebApi.Models.DTO;
 using Project.WebApi.Repositories;
-using System.Data;
 
 namespace Project.WebApi.Controllers
 {
@@ -14,11 +12,13 @@ namespace Project.WebApi.Controllers
     {
         private readonly IRegionRepository _regionRepository;
         private readonly IMapper _mapper;
+
         public RegionController(IRegionRepository regionRepository, IMapper mapper)
         {
             _regionRepository = regionRepository;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllRegions()
         {
@@ -32,11 +32,11 @@ namespace Project.WebApi.Controllers
         [ActionName("GetRegionAsync")]
         public async Task<IActionResult> GetRegionAsync(Guid id)
         {
-            var region = await _regionRepository.GetAsync(id); 
-            if(region == null)
+            var region = await _regionRepository.GetAsync(id);
+            if (region == null)
             {
                 return NotFound();
-            }    
+            }
             var regionDto = _mapper.Map<RegionDto>(region);
             return Ok(regionDto);
         }
@@ -67,7 +67,6 @@ namespace Project.WebApi.Controllers
             return Ok(regionDto);
         }
 
-
         [HttpPut]
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequest request)
@@ -81,7 +80,5 @@ namespace Project.WebApi.Controllers
             var regionDto = _mapper.Map<RegionDto>(region);
             return Ok(regionDto);
         }
-
-
     }
 }
