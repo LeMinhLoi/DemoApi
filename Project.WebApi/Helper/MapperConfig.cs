@@ -19,6 +19,8 @@ namespace Project.WebApi.Helper
             CreateMap<WalkDto, Walk>().ReverseMap();
             CreateMap<Walk, AddWalkRequest>().ReverseMap();
             CreateMap<Walk, UpdateWalkRequest>().ReverseMap();
+
+            CreateMap<User, UserDto>().ReverseMap();
         }
     }
 }

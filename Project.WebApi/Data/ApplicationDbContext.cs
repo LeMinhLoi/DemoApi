@@ -40,11 +40,66 @@ namespace Project.WebApi.Data
                     new Walk() { Id = id2, Length = 10, Name = "hellothon", RegionId = id5, WalkDifficultyId = id2 },
                     new Walk() { Id = id3, Length = 10, Name = "hithon", RegionId = id6, WalkDifficultyId = id3 }
                 );
+
+            modelBuilder.Entity<User>().HasData(
+                    new User() 
+                    { 
+                        Id = id1,
+                        Email = "loi@1234.com",
+                        Name = "le minh loi",
+                        UserName = "leminhloi",
+                        Password = "loi@1234",
+                        Phone = "0965920330",
+                    },
+                    new User()
+                    {
+                        Id = id2,
+                        Email = "nhat@1234.com",
+                        Name = "huynh nhat",
+                        UserName = "huynhnhat",
+                        Password = "nhat@1234",
+                        Phone = "0965920331",
+                    }
+                );
+
+            modelBuilder.Entity<Role>().HasData(
+                    new Role()
+                    {
+                        Id = id1,
+                        Name = "admin",
+                        Description = "admin"
+                    },
+                    new Role()
+                    {
+                        Id = id2,
+                        Name = "employee",
+                        Description = "employee"
+                    }
+                );
+
+            modelBuilder.Entity<UserRole>().HasData(
+                    new UserRole()
+                    {
+                        Id = id1,
+                        RoleId = id1,
+                        UserId = id1
+                    },
+                    new UserRole()
+                    {
+                        Id = id2,
+                        RoleId = id2,
+                        UserId = id2
+                    }
+                );
             #endregion
         }
 
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walk> Walks { get; set; }
         public DbSet<WalkDifficulty> WalkDifficulties { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles{ get; set; }
+
     }
 }

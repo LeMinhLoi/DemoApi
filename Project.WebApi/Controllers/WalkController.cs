@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Project.WebApi.Models.Domain;
 using Project.WebApi.Models.DTO;
 using Project.WebApi.Repositories;
-using System.Data;
 
 namespace Project.WebApi.Controllers
 {
@@ -13,6 +12,7 @@ namespace Project.WebApi.Controllers
     //it uses this tag to check the model state is valid or invalid (FluentValidation)
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class WalkController : Controller
     {
         private readonly IMapper _mapper;
@@ -37,6 +37,7 @@ namespace Project.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddAsync(AddWalkRequest request)
         {
             // Validate the incoming request
@@ -52,6 +53,7 @@ namespace Project.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             // call Repository to delete walk
@@ -69,6 +71,7 @@ namespace Project.WebApi.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateWalkAsync([FromRoute] Guid id,
                                                             [FromBody] UpdateWalkRequest request)
         {
@@ -181,14 +184,14 @@ namespace Project.WebApi.Controllers
             //        $"{nameof(updateWalkRequest.Length)} should be greater than zero.");
             //}
 
-            var region = await regionRepository.GetAsync(updateWalkRequest.RegionId);
+            var region = await _regionRepository.GetAsync(updateWalkRequest.RegionId);
             if (region == null)
             {
                 ModelState.AddModelError(nameof(updateWalkRequest.RegionId),
                     $"{nameof(updateWalkRequest.RegionId)} is invalid.");
             }
 
-            var walkDifficulty = await walkDifficultyRepository.GetAsync(updateWalkRequest.WalkDifficultyId);
+            var walkDifficulty = await _walkDifficultyRepository.GetAsync(updateWalkRequest.WalkDifficultyId);
             if (walkDifficulty == null)
             {
                 ModelState.AddModelError(nameof(updateWalkRequest.WalkDifficultyId),

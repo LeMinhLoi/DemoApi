@@ -35,6 +35,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     }) ;
 
+//for mysql
+
 //var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
 //// Replace 'YourDbContext' with the name of your own DbContext derived class.
 //services.AddDbContext<DataContext>(
@@ -49,8 +51,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddTransient<IWalkDifficultyRepository, WalkDifficultyRepository>();
 builder.Services.AddTransient<IRegionRepository, RegionRepository>();
 builder.Services.AddTransient<IWalkRepository, WalkRepository>();
+builder.Services.AddTransient<ITokenHandler, Project.WebApi.Repositories.TokenHandler>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddAutoMapper(typeof(MapperConfig).Assembly);
-
 
 var app = builder.Build();
 

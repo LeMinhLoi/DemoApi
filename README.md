@@ -1,5 +1,11 @@
 # DemoApi
 
+## About:
+- Repository
+- AutoMapper
+- FluentValidation
+- JWT
+
 ## Must Install:
 
 - Microsoft.EntityFrameworkCore.Tools

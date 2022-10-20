@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.WebApi.Models.Domain;
 using Project.WebApi.Models.DTO;
@@ -8,6 +9,7 @@ namespace Project.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]//say that route name api = name controller
+    [Authorize]
     public class WalkDifficultyController : Controller
     {
         private readonly IWalkDifficultyRepository _walkDifficultyRepository;
@@ -41,6 +43,7 @@ namespace Project.WebApi.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateWalkDifficultyAsync([FromRoute] Guid id, [FromBody] UpdateWalkDifficultyRequest request)
         {
             var walkDifficulty = _mapper.Map<WalkDifficulty>(request);
@@ -55,6 +58,7 @@ namespace Project.WebApi.Controllers
         
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var o = await _walkDifficultyRepository.DeleteAsync(id);
@@ -62,6 +66,7 @@ namespace Project.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddAsync(AddWalkDifficultyRequest request)
         {
             var walkDifficulty = _mapper.Map<WalkDifficulty>(request);
